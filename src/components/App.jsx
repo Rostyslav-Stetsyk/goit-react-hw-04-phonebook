@@ -9,13 +9,14 @@ export const App = () => {
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
-
-  useEffect(() => {
     const contacts = localStorage.getItem('contacts');
     if (contacts !== null) setContacts(JSON.parse(contacts));
   }, []);
+
+  useEffect(() => {
+    if (!contacts.length) return;
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
   const onSubmitForm = contact => {
     if (contacts.some(el => el.number === contact.number)) {
